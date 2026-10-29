@@ -404,8 +404,17 @@ pub fn show(app: &mut App, ui: &mut egui::Ui) {
                     .unwrap_or_default();
                 let (rect, response) =
                     ui.allocate_exact_size(Vec2::splat(AVATAR_SIZE), Sense::click());
+                let account_label = if name.is_empty() {
+                    gettext(locale, "Account")
+                } else {
+                    name.as_str().into()
+                };
                 response.widget_info(|| {
-                    egui::WidgetInfo::labeled(egui::WidgetType::Button, ui.is_enabled(), &name)
+                    egui::WidgetInfo::labeled(
+                        egui::WidgetType::Button,
+                        ui.is_enabled(),
+                        &account_label,
+                    )
                 });
                 if ui.is_rect_visible(rect) {
                     let fill = if response.hovered() || response.has_focus() {
